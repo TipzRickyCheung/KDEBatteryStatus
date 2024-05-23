@@ -42,19 +42,6 @@ PlasmaExtras.Representation {
         Column {
             id: batteryList
 
-            readonly property Item firstHeaderItem: {
-                if (batteryRepeater.visible) {
-                    return batteryRepeater;
-                }
-                return null;
-            }
-            readonly property Item lastHeaderItem: {
-                if (batteryRepeater.visible) {
-                    return batteryRepeater;
-                }
-                return null;
-            }
-
             Repeater {
                 id: batteryRepeater
 
@@ -64,7 +51,7 @@ PlasmaExtras.Representation {
                     battery: model
                     remainingTime: dialog.remainingTime
 
-                    KeyNavigation.up: index === 0 ? batteryList.lastHeaderItem : batteryRepeater.itemAt(index - 1)
+                    KeyNavigation.up: index === 0 ? null : batteryRepeater.itemAt(index - 1)
                     KeyNavigation.down: index + 1 < batteryRepeater.count ? batteryRepeater.itemAt(index + 1) : null
                     KeyNavigation.backtab: KeyNavigation.up
                     KeyNavigation.tab: KeyNavigation.down
