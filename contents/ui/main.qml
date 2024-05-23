@@ -176,4 +176,17 @@ PlasmoidItem {
         pluggedIn: pmSource.data["AC Adapter"] !== undefined && pmSource.data["AC Adapter"]["Plugged in"]
         remainingTime: batterymonitor.remainingTime
     }
+
+    Plasmoid.contextualActions: [
+        PlasmaCore.Action {
+            text: i18n("Show Battery Percentage on Icon When Not Fully Charged")
+            icon.name: "format-number-percent"
+            visible: batterymonitor.hasBatteries
+            checkable: true
+            checked: Plasmoid.configuration.showPercentage
+            onTriggered: checked => {
+                Plasmoid.configuration.showPercentage = checked
+            }
+        }
+    ]
 }

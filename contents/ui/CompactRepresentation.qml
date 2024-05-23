@@ -78,6 +78,16 @@ MouseArea {
                     percent: batteryContainer.percent
                     pluggedIn: batteryContainer.pluggedIn
                 }
+
+                WorkspaceComponents.BadgeOverlay {
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+
+                    visible: Plasmoid.configuration.showPercentage && !root.isSomehowFullyCharged
+
+                    text: i18nc("battery percentage below battery icon", "%1%", percent)
+                    icon: batteryIcon
+                }
             }
         }
     }
