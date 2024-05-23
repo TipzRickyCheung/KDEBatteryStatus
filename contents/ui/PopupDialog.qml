@@ -20,54 +20,7 @@ PlasmaExtras.Representation {
 
     property int remainingTime
 
-    property var profilesInstalled
-    property string activeProfile
-    property var profiles
-
-    // List of active power management inhibitions (applications that are
-    // blocking sleep and screen locking).
-    //
-    // type: [{
-    //  Icon: string,
-    //  Name: string,
-    //  Reason: string,
-    // }]
-    property var inhibitions: []
-    property bool manuallyInhibited
-    property bool inhibitsLidAction
-
-    property string inhibitionReason
-    property string degradationReason
-    // type: [{ Name: string, Icon: string, Profile: string, Reason: string }]
-    required property var profileHolds
-
-    signal powerManagementChanged(bool disabled)
-    signal inhibitionChangeRequested(bool inhibit)
-    signal activateProfileRequested(string profile)
-
     collapseMarginsHint: true
-
-    KeyNavigation.down: pmSwitch.pmCheckBox
-
-    header: PlasmaExtras.PlasmoidHeading {
-        leftPadding: !mirrored ? Kirigami.Units.smallSpacing : 0
-        rightPadding: mirrored ? Kirigami.Units.smallSpacing : 0
-
-        contentItem: PowerManagementItem {
-            id: pmSwitch
-
-            inhibitions: dialog.inhibitions
-            manuallyInhibited: dialog.manuallyInhibited
-            inhibitsLidAction: dialog.inhibitsLidAction
-            pluggedIn: dialog.pluggedIn
-
-            onInhibitionChangeRequested: inhibit => {
-                dialog.inhibitionChangeRequested(inhibit);
-            }
-
-            onDisabledChanged: dialog.powerManagementChanged(disabled)
-        }
-    }
 
     contentItem: PlasmaComponents3.ScrollView {
         id: scrollView
@@ -89,42 +42,17 @@ PlasmaExtras.Representation {
         Column {
             id: batteryList
 
-            spacing: Kirigami.Units.smallSpacing * 2
-
             readonly property Item firstHeaderItem: {
-                if (powerProfileItem.visible) {
-                    return powerProfileItem;
+                if (batteryRepeater.visible) {
+                    return batteryRepeater;
                 }
                 return null;
             }
             readonly property Item lastHeaderItem: {
-                if (powerProfileItem.visible) {
-                    return powerProfileItem;
+                if (batteryRepeater.visible) {
+                    return batteryRepeater;
                 }
                 return null;
-            }
-
-            PowerProfileItem {
-                id: powerProfileItem
-
-                width: scrollView.availableWidth
-
-                KeyNavigation.down: batteryRepeater.count > 0 ? batteryRepeater.itemAt(0) : null
-                KeyNavigation.backtab: KeyNavigation.up
-                KeyNavigation.tab: KeyNavigation.down
-
-                profilesInstalled: dialog.profilesInstalled
-                profilesAvailable: dialog.profiles.length > 0
-                activeProfile: dialog.activeProfile
-                inhibitionReason: dialog.inhibitionReason
-                degradationReason: dialog.degradationReason
-                profileHolds: dialog.profileHolds
-
-                onActivateProfileRequested: profile => {
-                    dialog.activateProfileRequested(profile);
-                }
-
-                onActiveFocusChanged: if (activeFocus) scrollView.positionViewAtItem(this)
             }
 
             Repeater {

@@ -36,21 +36,3 @@ function stringForBatteryState(batteryData, source) {
         return i18nc("Battery is currently not present in the bay", "Not present");
     }
 }
-
-function updateInhibitions(rootItem, source) {
-    const inhibitions = [];
-    const manualInhibitions = [];
-
-    if (source.data["Inhibitions"]) {
-        for (let key in pmSource.data["Inhibitions"]) {
-            if (key === "plasmashell" || key === "plasmoidviewer") {
-                manualInhibitions.push(key);
-            } else {
-                inhibitions.push(pmSource.data["Inhibitions"][key]);
-            }
-        }
-    }
-
-    rootItem.manuallyInhibited = manualInhibitions.length > 0;
-    rootItem.inhibitions = inhibitions;
-}

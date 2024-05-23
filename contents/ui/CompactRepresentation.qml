@@ -19,11 +19,8 @@ MouseArea {
 
     property real itemSize: Math.min(root.height, root.width/view.count)
     readonly property bool isConstrained: Plasmoid.formFactor === PlasmaCore.Types.Vertical || Plasmoid.formFactor === PlasmaCore.Types.Horizontal
-    property real brightnessError: 0
     property QtObject batteries
     property bool hasBatteries: false
-    required property bool isSetToPerformanceMode
-    required property bool isSetToPowerSaveMode
     required property bool isSomehowFullyCharged
 
     activeFocusOnTab: true
@@ -67,20 +64,6 @@ MouseArea {
 
                 property real iconSize: Math.min(width, height)
 
-                // "Held on a Power Profile mode while plugged in" use case; show the
-                // icon of the active mode so the user can notice this at a glance
-                Kirigami.Icon {
-                    id: powerProfileModeIcon
-
-                    anchors.fill: parent
-
-                    visible: batteryContainer.pluggedIn && (root.isSetToPerformanceMode || root.isSetToPowerSaveMode)
-                    source: root.isSetToPerformanceMode
-                        ? "battery-profile-performance-symbolic"
-                        : "battery-profile-powersave-symbolic"
-                    active: root.containsMouse
-                }
-
                 // Show normal battery icon
                 WorkspaceComponents.BatteryIcon {
                     id: batteryIcon
@@ -94,16 +77,6 @@ MouseArea {
                     hasBattery: root.hasBatteries
                     percent: batteryContainer.percent
                     pluggedIn: batteryContainer.pluggedIn
-                }
-
-                WorkspaceComponents.BadgeOverlay {
-                    anchors.bottom: parent.bottom
-                    anchors.right: parent.right
-
-                    visible: Plasmoid.configuration.showPercentage && !root.isSomehowFullyCharged
-
-                    text: i18nc("battery percentage below battery icon", "%1%", percent)
-                    icon: batteryIcon
                 }
             }
         }

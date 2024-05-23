@@ -211,17 +211,6 @@ PlasmaComponents3.ItemDelegate {
                     visible: details.healthRowVisible
                 }
             }
-
-            InhibitionHint {
-                Layout.fillWidth: true
-                Layout.topMargin: Kirigami.Units.smallSpacing
-
-                readonly property var chargeStopThreshold: pmSource.data["Battery"] ? pmSource.data["Battery"]["Charge Stop Threshold"] : undefined
-                readonly property bool pluggedIn: pmSource.data["AC Adapter"] !== undefined && pmSource.data["AC Adapter"]["Plugged in"]
-                visible: pluggedIn && root.isPowerSupply && typeof chargeStopThreshold === "number" && chargeStopThreshold > 0 && chargeStopThreshold < 100
-                iconSource: "kt-speed-limits" // FIXME good icon
-                text: i18n("Battery is configured to charge up to approximately %1%.", chargeStopThreshold || 0)
-            }
         }
     }
 }
