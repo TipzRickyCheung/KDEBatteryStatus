@@ -167,7 +167,7 @@ PlasmoidItem {
         Layout.maximumWidth: Kirigami.Units.gridUnit * 80
         Layout.preferredWidth: Kirigami.Units.gridUnit * 20
 
-        Layout.minimumHeight: Kirigami.Units.gridUnit * 10
+        Layout.minimumHeight: Kirigami.Units.gridUnit * 5
         Layout.maximumHeight: Kirigami.Units.gridUnit * 40
         Layout.preferredHeight: implicitHeight
 
